@@ -1,0 +1,177 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Water Billing System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Water Billing Portal</h1>
+      <div id="userBar" class="hidden">
+        <span id="userInfo"></span>
+        <button id="btnLogout">Logout</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Login -->
+      <section id="loginView">
+        <div class="card">
+          <h2>Login</h2>
+          <form id="loginForm">
+            <label>Username <input type="text" id="loginUsername" required /></label>
+            <label>Password <input type="password" id="loginPassword" required /></label>
+            <button type="submit">Login</button>
+          </form>
+          <div id="loginMsg" class="msg"></div>
+        </div>
+      </section>
+
+      <!-- Admin View -->
+      <section id="adminView" class="hidden">
+        <h2>Admin Dashboard</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Create Billing</h3>
+            <form id="formCreateBilling">
+              <label>Bill Date <input type="date" id="billDate" required /></label>
+              <label>Start Date <input type="date" id="startDate" required /></label>
+              <label>End Date <input type="date" id="endDate" required /></label>
+              <button type="submit">Create</button>
+            </form>
+            <div id="billingMsg" class="msg"></div>
+            <div>
+              <h4>Existing Bills</h4>
+              <button id="btnLoadBills">Refresh Bills</button>
+              <div id="billList"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Meter Master</h3>
+            <form id="formAddMeter">
+              <label>Meter No <input type="text" id="meterNo" required /></label>
+              <label>Model <input type="text" id="meterModel" /></label>
+              <label>Purchase Date <input type="date" id="meterPurchase" /></label>
+              <button type="submit">Add Meter</button>
+            </form>
+            <button id="btnListMeters">List Meters</button>
+            <div id="meterList"></div>
+          </div>
+
+          <div class="card">
+            <h3>Meter Mapping</h3>
+            <button id="btnLoadUnassigned">Load Unassigned Meters</button>
+            <div id="unassignedMeters"></div>
+            <h4>Assign</h4>
+            <form id="formAssignMapping">
+              <label>MeterNo <input type="text" id="mapMeterNo" required /></label>
+              <label>CCode <input type="text" id="mapCCode" required /></label>
+              <label>Start Date <input type="date" id="mapStart" required /></label>
+              <button type="submit">Assign</button>
+            </form>
+            <h4>End Mapping</h4>
+            <form id="formEndMapping">
+              <label>MeterNo <input type="text" id="endMeterNo" required /></label>
+              <label>CCode <input type="text" id="endCCode" required /></label>
+              <label>End Date <input type="date" id="endDateMap" required /></label>
+              <button type="submit">Set End</button>
+            </form>
+            <div id="mappingMsg" class="msg"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Meter Reader View -->
+      <section id="readerView" class="hidden">
+        <h2>Meter Reader</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Current Billing</h3>
+            <button id="btnLoadOpenBills">Load OPEN Bills</button>
+            <select id="selectBill"></select>
+            <div id="readerBillInfo"></div>
+          </div>
+
+          <div class="card">
+            <h3>Enter Reading</h3>
+            <label>Consumer (CCode) <input type="text" id="readCCode" /></label>
+            <button id="btnLoadPrevReadings">Show Previous Readings</button>
+            <div id="prevReadings"></div>
+            <form id="formReading">
+              <label>BillNo <input type="text" id="readBillNo" required /></label>
+              <label>CCode <input type="text" id="readCCode2" required /></label>
+              <label>Current Reading <input type="number" id="readCurrent" required /></label>
+              <label>Meter Image <input type="file" id="readImage" accept="image/*" /></label>
+              <button type="submit">Submit Reading</button>
+            </form>
+            <div id="readingMsg" class="msg"></div>
+          </div>
+
+          <div class="card">
+            <h3>Print Last Bill</h3>
+            <button id="btnPrintLast">Print</button>
+            <div id="printMsg" class="msg"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Change Password</h3>
+          <form id="formReaderPwd">
+            <label>Old Password <input type="password" id="readerOldPwd" required /></label>
+            <label>New Password <input type="password" id="readerNewPwd" required /></label>
+            <button type="submit">Update</button>
+          </form>
+          <div id="readerPwdMsg" class="msg"></div>
+        </div>
+      </section>
+
+      <!-- Consumer View -->
+      <section id="consumerView" class="hidden">
+        <h2>My Account</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>My Profile</h3>
+            <form id="formProfile">
+              <label>Family Name <input type="text" id="pfFamilyName" /></label>
+              <label>House No <input type="text" id="pfHouseNo" /></label>
+              <label>KSEB No <input type="text" id="pfKSEBNo" /></label>
+              <label>Phone No <input type="text" id="pfPhoneNo" /></label>
+              <label>Email <input type="email" id="pfEmail" /></label>
+              <button type="submit">Save</button>
+            </form>
+            <div id="profileMsg" class="msg"></div>
+          </div>
+
+          <div class="card">
+            <h3>My Bills</h3>
+            <button id="btnLoadMyBills">Refresh</button>
+            <div id="myBills"></div>
+          </div>
+
+          <div class="card">
+            <h3>Change Password</h3>
+            <form id="formConsumerPwd">
+              <label>Old Password <input type="password" id="consOldPwd" required /></label>
+              <label>New Password <input type="password" id="consNewPwd" required /></label>
+              <button type="submit">Update</button>
+            </form>
+            <div id="consPwdMsg" class="msg"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <small>© newClick innovations</small>
+    </footer>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html
